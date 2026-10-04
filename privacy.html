@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <title>Chính sách quyền riêng tư · Sổ lúa Pickleball</title>
+  <style>
+    :root { color-scheme: light; font-family: Arial, sans-serif; background: #f4f6ef; color: #223b2c; }
+    body { margin: 0; padding: 28px 16px; }
+    main { max-width: 760px; margin: auto; padding: 28px; background: #fff; border: 1px solid #dce5d8; border-radius: 18px; box-shadow: 0 12px 35px #173c2112; }
+    h1 { font-size: 25px; color: #234d38; } h2 { margin-top: 25px; font-size: 17px; } p, li { color: #526358; line-height: 1.75; font-size: 15px; }
+    a { color: #256c8f; } .date { font-size: 12px; color: #78847b; }
+  </style>
+<base href="/pickleball/" /><link rel="manifest" href="/pickleball/manifest.json" /><meta name="theme-color" content="#173F35" /><meta name="mobile-web-app-capable" content="yes" /><meta name="apple-mobile-web-app-capable" content="yes" /><meta name="apple-mobile-web-app-status-bar-style" content="default" /><meta name="apple-mobile-web-app-title" content="Sổ lúa" /><link rel="apple-touch-icon" href="/pickleball/pwa-icon.png" /></head>
+<body><main>
+  <h1>Chính sách quyền riêng tư — Sổ lúa Pickleball</h1>
+  <p class="date">Cập nhật: 30/09/2026</p>
+  <p>Sổ lúa Pickleball là ứng dụng nội bộ để ghi trận pickleball, khoản góp lúa, quỹ và thống kê của nhóm. Dữ liệu nghiệp vụ được lưu trên thiết bị của bạn. Nếu bạn chọn kết nối Google Drive, ứng dụng đồng bộ một tệp JSON và các bản sao lưu theo ngày vào Drive của chính tài khoản Google bạn đã chọn.</p>
+  <h2>Dữ liệu Google được truy cập</h2>
+  <p>Ứng dụng dùng đăng nhập Google để xác nhận tài khoản và xin quyền <code>drive.file</code>. Quyền này cho phép ứng dụng tạo và cập nhật các tệp sao lưu JSON mà ứng dụng tạo trong Drive; ứng dụng không yêu cầu quyền đọc toàn bộ tệp Drive của bạn. Thông tin tài khoản được dùng trong kết nối là mã Google ổn định và email để hiển thị tài khoản đang đồng bộ.</p>
+  <h2>Cách sử dụng và lưu trữ</h2>
+  <ul>
+    <li>Dữ liệu trận đấu, tên, quỹ và các khoản lúa được serialize thành JSON để khôi phục và đồng bộ các thiết bị của bạn.</li>
+    <li>Tệp JSON nằm trong Google Drive của bạn và bạn có thể xem, tải xuống hoặc xóa trực tiếp trong Drive.</li>
+    <li>Access token ngắn hạn không được lưu lâu dài. Refresh token được mã hóa AES-256-GCM ở backend để cấp access token khi đồng bộ; mã phiên thiết bị chỉ được lưu dưới dạng hash SHA-256.</li>
+    <li>Ứng dụng không bán, cho thuê hoặc dùng dữ liệu Google để quảng cáo. Dữ liệu được gửi đến Google Drive của chính bạn theo yêu cầu đồng bộ.</li>
+  </ul>
+  <h2>Quyền kiểm soát và xóa dữ liệu</h2>
+  <p>Bạn có thể ngắt kết nối thiết bị trong ứng dụng, thu hồi quyền của ứng dụng trong <a href="https://myaccount.google.com/permissions">Google Account permissions</a>, hoặc xóa các tệp sao lưu trong Google Drive. Ngắt kết nối một thiết bị không xóa tệp sao lưu. Dữ liệu cục bộ chỉ bị xóa khi bạn xóa dữ liệu trình duyệt/ứng dụng hoặc chủ động khôi phục một bản dữ liệu khác.</p>
+  <h2>Bảo mật</h2>
+  <p>Kết nối với Google và đồng bộ dùng HTTPS. Không gửi mật khẩu Google cho ứng dụng. Hãy bảo vệ thiết bị và tài khoản Google của bạn; dữ liệu trong tệp sao lưu JSON trên Drive có thể được đọc bởi bất kỳ ai bạn cấp quyền truy cập tệp.</p>
+  <h2>Liên hệ</h2>
+  <p>Với câu hỏi về dữ liệu của ứng dụng, hãy liên hệ người quản lý nhóm đã triển khai Sổ lúa Pickleball.</p>
+</main></body>
+</html>

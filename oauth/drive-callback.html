@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Đang kết nối Google Drive · Sổ lúa</title>
+  <style>
+    :root { color-scheme: light; font-family: Arial, sans-serif; background: #f5f6f0; color: #234532; }
+    body { min-height: 100vh; margin: 0; display: grid; place-items: center; }
+    main { width: min(420px, calc(100% - 36px)); padding: 26px; box-sizing: border-box; background: #fff; border: 1px solid #d7e2d5; border-radius: 18px; box-shadow: 0 12px 35px #183e2414; text-align: center; }
+    .spinner { width: 28px; height: 28px; margin: 0 auto 16px; border: 3px solid #d9e5d7; border-top-color: #315b41; border-radius: 50%; animation: spin .8s linear infinite; }
+    h1 { margin: 0; font-size: 18px; } p { color: #68796c; font-size: 13px; line-height: 1.6; } .error { color: #a53d32; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+<base href="/pickleball/" /><link rel="manifest" href="/pickleball/manifest.json" /><meta name="theme-color" content="#173F35" /><meta name="mobile-web-app-capable" content="yes" /><meta name="apple-mobile-web-app-capable" content="yes" /><meta name="apple-mobile-web-app-status-bar-style" content="default" /><meta name="apple-mobile-web-app-title" content="Sổ lúa" /><link rel="apple-touch-icon" href="/pickleball/pwa-icon.png" /></head>
+<body>
+  <main aria-live="polite">
+    <div class="spinner" id="spinner"></div>
+    <h1 id="title">Đang hoàn tất kết nối Google Drive…</h1>
+    <p id="message">Vui lòng không đóng trang này.</p>
+  </main>
+  <script>
+    (async () => {
+      const params = new URLSearchParams(location.search);
+      const code = params.get("code");
+      const state = params.get("state");
+      const error = params.get("error");
+      history.replaceState(null, "", location.pathname);
+      const title = document.getElementById("title");
+      const message = document.getElementById("message");
+      const spinner = document.getElementById("spinner");
+      const fail = (text) => {
+        spinner.hidden = true;
+        title.textContent = "Chưa kết nối được Google Drive";
+        message.textContent = text;
+        message.className = "error";
+      };
+      if (!state || (!code && !error)) { fail("Thiếu thông tin phản hồi OAuth. Hãy trở lại ứng dụng và kết nối lại."); return; }
+      try {
+        const response = await fetch("https://picklescore-7qdd7yfn.manus.space/api/google-drive/exchange", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          cache: "no-store",
+          referrerPolicy: "no-referrer",
+          body: JSON.stringify({ code, state, error }),
+        });
+        const result = await response.json();
+        if (!response.ok || !result.returnTo) throw new Error(result.error || "Không thể hoàn tất kết nối Google.");
+        const returnTo = new URL(result.returnTo);
+        const isGithubPwa = returnTo.origin === "https://nguyenquyetthang311honor400pro-create.github.io" && returnTo.pathname.startsWith("/pickleball");
+        const isPreview = returnTo.protocol === "https:" && /^8081-[a-z0-9-]+\.sg2\.manus\.computer$/.test(returnTo.hostname);
+        const isNative = returnTo.protocol === "manuspickleballsoke:" && returnTo.pathname === "/oauth/drive-callback";
+        if (!isGithubPwa && !isPreview && !isNative) throw new Error("Địa chỉ quay lại không được cho phép.");
+        if (result.deviceToken && result.email) returnTo.hash = new URLSearchParams({ drive_token: result.deviceToken, drive_email: result.email }).toString();
+        if (result.error) returnTo.hash = new URLSearchParams({ drive_error: result.error }).toString();
+        title.textContent = "Đã kết nối Google Drive";
+        message.textContent = "Đang quay lại ứng dụng…";
+        location.replace(returnTo.toString());
+      } catch (cause) {
+        fail(cause instanceof Error ? cause.message : "Không thể hoàn tất kết nối Google Drive.");
+      }
+    })();
+  </script>
+</body>
+</html>
